@@ -12,11 +12,16 @@ public class MeleeEnemy : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     private float cooldownTimer = Mathf.Infinity;
 
+    // Reference
     private Animator anim;
+    private Health playerHealth;
+
+    private EnemyPatrol enemyPatrol;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        enemyPatrol = GetComponentInParent<EnemyPatrol>();
     }
 
     private void Update()
@@ -32,6 +37,9 @@ public class MeleeEnemy : MonoBehaviour
                 anim.SetTrigger("meleeAttack");
             }
         }
+
+        if(enemyPatrol != null)
+            enemyPatrol.enabled = !PlayerInSight();
         
     }
 
@@ -40,6 +48,11 @@ public class MeleeEnemy : MonoBehaviour
         RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance, 
         new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), 
             0,  Vector2.left, 0, playerLayer);
+
+        if(hit.collider != null)
+        {
+            playerHealth = hit.transform.GetComponent<Health>();
+        }
 
         return hit.collider != null;
     }
@@ -56,6 +69,7 @@ public class MeleeEnemy : MonoBehaviour
         if (PlayerInSight())
         {
             // Damge player health
+            playerHealth.TakeDamage(damage);
         }
     }
 }
