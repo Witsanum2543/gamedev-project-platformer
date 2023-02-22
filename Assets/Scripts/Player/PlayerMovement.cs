@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     BoxCollider2D myFeetCollider;
     Vector2 initialScale;
 
+    private float horizontalInput;
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        horizontalInput = Input.GetAxis("Horizontal");
+  
         Run();
         FlipSprite();     
     }
@@ -48,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        if(!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        if(!isGrounded())
         {
             return;
         }
@@ -56,6 +60,11 @@ public class PlayerMovement : MonoBehaviour
         {
                 myRigidbody.velocity += new Vector2(0f, jumpHeight);
         }
+    }
+
+    bool isGrounded()
+    {
+        return myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
     }
 
     void Run()
