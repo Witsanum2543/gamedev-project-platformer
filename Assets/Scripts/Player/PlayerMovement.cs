@@ -18,8 +18,6 @@ public class PlayerMovement : MonoBehaviour
 
     private float horizontalInput;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -36,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
   
         Run();
         FlipSprite();     
+
+        Debug.Log(myRigidbody.velocity);
     }
 
     void playerSizeScale()
@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnMove(InputValue value)
     {
+        // store move direction
         moveInput = value.Get<Vector2>();
     }
 

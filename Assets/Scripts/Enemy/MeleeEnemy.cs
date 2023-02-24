@@ -12,6 +12,7 @@ public class MeleeEnemy : MonoBehaviour
     [Header ("Collider Parameters")]
     [SerializeField] private float colliderDistance;
     [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] private CapsuleCollider2D headBoxCollider;
 
     [Header ("Player Layer")]
     [SerializeField] private LayerMask playerLayer;
@@ -62,6 +63,7 @@ public class MeleeEnemy : MonoBehaviour
         return hit.collider != null;
     }
 
+    // DRAWING HITBOX
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -75,6 +77,14 @@ public class MeleeEnemy : MonoBehaviour
         {
             // Damge player health
             playerHealth.TakeDamage(damage);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.tag == "Player")
+        {
+            Rigidbody2D playerRigidBody = collision.GetComponent<Rigidbody2D>();
+            playerRigidBody.velocity = new Vector2(0f, 7f);
         }
     }
 }

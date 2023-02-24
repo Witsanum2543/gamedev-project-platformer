@@ -3,69 +3,60 @@ using UnityEngine;
 public class Enemy_Sideways : MonoBehaviour
 {
     [SerializeField] private float movementDistance;
-    [SerializeField] private float speed;
+    [SerializeField] private float speedXAxis;
+    [SerializeField] private float speedYAxis;
     [SerializeField] private float damage;
     [SerializeField] private bool upDown;
 
     // moving left right
     private bool movingLeft;
-    private float leftEdge;
-    private float rightEdge;
+    private float leftBound;
+    private float rightBound;
 
     // moving up down
     private bool movingUp;
-    private float upperEdge;
-    private float lowerEdge;
+    private float upperBound;
+    private float lowerBound;
 
     private void Awake()
     {
-        leftEdge = transform.position.x - movementDistance;
-        rightEdge = transform.position.x + movementDistance;
+        leftBound = transform.position.x - movementDistance;
+        rightBound = transform.position.x + movementDistance;
 
-        upperEdge = transform.position.y - movementDistance;
-        lowerEdge = transform.position.y + movementDistance;
+        upperBound = transform.position.y - movementDistance;
+        lowerBound = transform.position.y + movementDistance;
     }
 
     private void Update()
     {
-        if (upDown)
-        {
-            if (movingUp)
-            {
-                if (transform.position.y > upperEdge)
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y - speed * Time.deltaTime, transform.position.z);
-                }
-                else movingUp = false;
+        // Move along Y Axis
+        if (movingUp) {
+            if (transform.position.y > upperBound) {
+                transform.position = new Vector3(transform.position.x, transform.position.y - speedYAxis * Time.deltaTime, transform.position.z);
             }
-            else 
-            {
-                if (transform.position.y < lowerEdge)
-                {
-                    transform.position = new Vector3(transform.position.x, transform.position.y + speed * Time.deltaTime, transform.position.z);
-                }
-                else movingUp = true;
-            }
+            else movingUp = false;
         }
-        else
-        {
-            if (movingLeft)
-            {
-                if (transform.position.x > leftEdge)
-                {
-                    transform.position = new Vector3(transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
-                }
-                else movingLeft = false;
+        else {
+            if (transform.position.y < lowerBound) {
+                transform.position = new Vector3(transform.position.x, transform.position.y + speedYAxis * Time.deltaTime, transform.position.z);
             }
-            else 
-            {
-                if (transform.position.x < rightEdge)
-                {
-                    transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
-                }
-                else movingLeft = true;
-            }
+            else movingUp = true;
         }
+        
+        // Move along X Axis
+        if (movingLeft) {
+            if (transform.position.x > leftBound) {
+                transform.position = new Vector3(transform.position.x - speedXAxis * Time.deltaTime, transform.position.y, transform.position.z);
+            }
+            else movingLeft = false;
+        }
+        else {
+            if (transform.position.x < rightBound) {
+                transform.position = new Vector3(transform.position.x + speedXAxis * Time.deltaTime, transform.position.y, transform.position.z);
+            }
+            else movingLeft = true;
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision) 
