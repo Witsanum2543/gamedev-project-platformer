@@ -18,11 +18,16 @@ public class MeleeEnemy : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     private float cooldownTimer = Mathf.Infinity;
 
+    [Header("Dizzy Parameter")]
+    [SerializeField] private float dizzyDuration;
+    private float dizzyTimer = Mathf.Infinity;
+
     // Reference
     private Animator anim;
     private Health playerHealth;
 
     private EnemyPatrol enemyPatrol;
+    private bool dead;
 
     private void Awake()
     {
@@ -45,8 +50,30 @@ public class MeleeEnemy : MonoBehaviour
         }
 
         if(enemyPatrol != null)
+            // enemy patrol will be disable if player in sight
             enemyPatrol.enabled = !PlayerInSight();
-        
+
+        if (dead) {
+            dizzyTimer = 0;
+            enemyPatrol.enabled = false;
+            anim.SetBool("isDizzy", false);
+            GetComponent<Health>().dead();
+            StartCoroutine(DisableAfterDeath(1.2f));
+        }
+
+        // If enemy is dizzy, dizzy for ... sec until it recovered.
+        if (anim.GetBool("isDizzy") == true) {
+            enemyPatrol.enabled = false;
+            dizzyTimer += Time.deltaTime;
+        }
+
+        // check if dizzy end ?
+        if(dizzyTimer > dizzyDuration) {
+            anim.SetBool("isDizzy", false);
+            enemyPatrol.enabled = true;
+            dizzyTimer = 0;
+        } 
+
     }
 
     private bool PlayerInSight()
@@ -80,11 +107,30 @@ public class MeleeEnemy : MonoBehaviour
         }
     }
 
+    private IEnumerator DisableAfterDeath(float second)
+    {
+        yield return new WaitForSeconds(second); // Wait for the deathDuration before disabling the object
+        gameObject.SetActive(false); // Disable the object
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Player")
         {
             Rigidbody2D playerRigidBody = collision.GetComponent<Rigidbody2D>();
             playerRigidBody.velocity = new Vector2(0f, 7f);
+            
+            // Stun enemy if enemy is not being dizzy
+            if (anim.GetBool("isDizzy") == false) {
+
+                anim.SetBool("isDizzy", true);
+            }
+
+            // If enemy already dizzy kill it
+            else {
+                Debug.Log("HI");
+                dead = true;
+            }
+
         }
     }
 }

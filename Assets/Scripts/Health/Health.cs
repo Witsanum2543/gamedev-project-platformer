@@ -8,12 +8,14 @@ public class Health : MonoBehaviour
     // { get; private set; } mean can public get but set be private
     public float currentHealth { get; private set; }
     private Animator anim;
-    private bool dead;
 
     [Header ("iFrames")]
     [SerializeField] private float iFramesDuration;
     [SerializeField] private int numberOfFlashes;
     private SpriteRenderer spriteRend;
+
+    [Header ("Components")]
+    [SerializeField] private Behaviour[] components;
 
     private void Awake()
     {
@@ -25,33 +27,20 @@ public class Health : MonoBehaviour
     public void TakeDamage(float _damage)
     {
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
+        
+        if (currentHealth <= 0) {
+            anim.SetTrigger("die");
+                
+            foreach (Behaviour component in components) {
+                component.enabled = false;
+            }
 
-        if (currentHealth > 0)
-        {
+        } else {
             anim.SetTrigger("hurt");
             //iframes
             StartCoroutine(Invunerability());
         }
-        else
-        {
-            if (!dead)
-            {
-                anim.SetTrigger("die");
-                
-                // Player
-                if (GetComponent<PlayerMovement>() != null)
-                    GetComponent<PlayerMovement>().enabled = false;
 
-                // Enemy
-                if (GetComponent<EnemyPatrol>() != null)
-                    GetComponentInParent<EnemyPatrol>().enabled = false;
-
-                if (GetComponent<MeleeEnemy>() != null)
-                    GetComponent<MeleeEnemy>().enabled = false;
-            
-                dead = true;
-            }
-        }
     }
     public void AddHealth(float _value)
     {
@@ -73,4 +62,15 @@ public class Health : MonoBehaviour
         }
         Physics2D.IgnoreLayerCollision(8, 0, false);
     }
+
+    // ************************** GETTER AND SETTER ***********************
+
+    public void setHealth(float health) {
+        currentHealth = health;
+    }
+
+    public void dead() {
+        TakeDamage(currentHealth);
+    }
+
 }

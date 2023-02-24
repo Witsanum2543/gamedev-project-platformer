@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
         Run();
         FlipSprite();     
 
-        Debug.Log(myRigidbody.velocity);
     }
 
     void playerSizeScale()
