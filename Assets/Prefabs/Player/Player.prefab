@@ -145,8 +145,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.017509483, y: -0.16853951}
-  m_Size: {x: 0.83778083, y: 0.4622668}
+  m_Offset: {x: -0.017509483, y: -0.16299784}
+  m_Size: {x: 0.8377811, y: 0.4511843}
   m_Direction: 1
 --- !u!114 &1331982506
 MonoBehaviour:
@@ -191,7 +191,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.016934872, y: -0.37485945}
+  m_Offset: {x: -0.016934872, y: -0.36562335}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 6
-  jumpHeight: 6.5
+  jumpHeight: 7
   sizeScale: 1.3
 --- !u!114 &8221537784636488727
 MonoBehaviour:
@@ -232,5 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
-  iFramesDuration: 0
-  numberOfFlashes: 0
+  iFramesDuration: 2
+  numberOfFlashes: 3
+  components:
+  - {fileID: 1331982510}

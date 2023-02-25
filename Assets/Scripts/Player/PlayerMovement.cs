@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         myBodyCollider = GetComponent<CapsuleCollider2D>();
         myFeetCollider = GetComponent<BoxCollider2D>();
-        playerSizeScale();
+        playerSizeScale(); 
     }
 
 
