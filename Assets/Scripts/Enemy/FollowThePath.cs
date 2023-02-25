@@ -4,16 +4,12 @@ public class FollowThePath : MonoBehaviour {
 
 
     [SerializeField] private Transform[] waypoints;
-
     [SerializeField] private float moveSpeed = 2f;
 
     // Index of current waypoint from which Enemy walks to the next one
     private int waypointIndex = 0;
+    private bool reverseMove = false;
 
-	private void Start () {
-        // Set position of Enemy as position of the first waypoint
-        // transform.position = waypoints[waypointIndex].transform.position;
-	}
 	
 	private void Update () {
         Move();
@@ -21,23 +17,35 @@ public class FollowThePath : MonoBehaviour {
 
     private void Move()
     {
+        // Check if reverse move is required
+        if (waypointIndex == waypoints.Length && !reverseMove) {
+            reverseMove = true;
+            waypointIndex--;
+        } else if (waypointIndex == 0 && reverseMove) {
+            reverseMove = false;
+            waypointIndex++;
+        }
 
-        // If enemy reached last waypoint then it stops
-        if (waypointIndex <= waypoints.Length - 1)
+        // Move the object towards the next waypoint
+        transform.position = Vector2.MoveTowards(transform.position,
+            waypoints[waypointIndex].transform.position,
+            moveSpeed * Time.deltaTime);
+
+        if (transform.position == waypoints[waypointIndex].transform.position)
         {
-            // Move Enemy from current waypoint to the next one
-            // using MoveTowards method
-            transform.position = Vector2.MoveTowards(transform.position,
-               waypoints[waypointIndex].transform.position,
-               moveSpeed * Time.deltaTime);
-
-            // If Enemy reaches position of waypoint he walked towards
-            // then waypointIndex is increased by 1
-            // and Enemy starts to walk to the next waypoint
-            if (transform.position == waypoints[waypointIndex].transform.position)
-            {
-                waypointIndex += 1;
+            // Update the waypoint index based on the direction of movement
+            if (reverseMove) {
+                waypointIndex--;
+            } else {
+                waypointIndex++;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag == "Player") {
+            Health playerHealth = collision.GetComponent<Health>();
+            playerHealth.TakeDamage(playerHealth.currentHealth);
         }
     }
 }
