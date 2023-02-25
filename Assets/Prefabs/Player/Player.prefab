@@ -141,12 +141,12 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1295465413728104548}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 52b8a835752a4cf4e981b7c6273c7d4f, type: 2}
+  m_Material: {fileID: 6200000, guid: 82460a1ef53c2ca49b175a3c26e670f9, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.017509483, y: -0.16299784}
-  m_Size: {x: 0.8377811, y: 0.4511843}
+  m_Offset: {x: -0.017509483, y: -0.16691555}
+  m_Size: {x: 0.8377814, y: 0.45902312}
   m_Direction: 1
 --- !u!114 &1331982506
 MonoBehaviour:
@@ -191,7 +191,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.016934872, y: -0.36562335}
+  m_Offset: {x: -0.020063877, y: -0.3670988}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -202,7 +202,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.65505505, y: 0.058409452}
+  m_Size: {x: 0.64879704, y: 0.055458546}
   m_EdgeRadius: 0
 --- !u!114 &1331982510
 MonoBehaviour:
@@ -219,6 +219,7 @@ MonoBehaviour:
   runSpeed: 6
   jumpHeight: 7
   sizeScale: 1.3
+  jumpSound: {fileID: 8300000, guid: eeba3ad85ec61344a81ca91dff19531d, type: 3}
 --- !u!114 &8221537784636488727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,3 +237,5 @@ MonoBehaviour:
   numberOfFlashes: 3
   components:
   - {fileID: 1331982510}
+  diedSound: {fileID: 8300000, guid: c329b9a3682b57346b92db9a316d5d68, type: 3}
+  hurtSound: {fileID: 8300000, guid: 15c2a2e4f609b034c959217f1b0cc08b, type: 3}

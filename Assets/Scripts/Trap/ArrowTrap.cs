@@ -14,13 +14,17 @@ public class ArrowTrap : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float resetTime;
     [SerializeField] private float damage;
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip arrowSound;
     
     private float cooldownTimer;
 
 
     private void Attack() {
         cooldownTimer = 0;
-
+        
+        SoundManager.instance.PlaySound(arrowSound, SoundManager.instance.calculateVolume(transform.position, 1, 5));
         arrows[FindArrows()].transform.position = firePoint.position;
         arrows[FindArrows()].GetComponent<EnemyProjectile>().ActivateProjectile(direction, speed, resetTime, damage);
     }

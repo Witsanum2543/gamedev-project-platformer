@@ -17,6 +17,10 @@ public class Health : MonoBehaviour
     [Header ("Components")]
     [SerializeField] private Behaviour[] components;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip diedSound;
+    [SerializeField] private AudioClip hurtSound;
+
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -35,10 +39,13 @@ public class Health : MonoBehaviour
                 component.enabled = false;
             }
 
+            SoundManager.instance.PlaySound(diedSound);
+
         } else {
             anim.SetTrigger("hurt");
             //iframes
             StartCoroutine(Invunerability());
+            SoundManager.instance.PlaySound(hurtSound);
         }
 
     }

@@ -189,6 +189,7 @@ MonoBehaviour:
   speed: 10
   resetTime: 0.5
   damage: 1
+  arrowSound: {fileID: 8300000, guid: 2c79059f1a9fa7542a596290413f2f0e, type: 3}
 --- !u!1 &3462612604471545137
 GameObject:
   m_ObjectHideFlags: 0

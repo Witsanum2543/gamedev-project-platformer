@@ -22,6 +22,10 @@ public class MeleeEnemy : MonoBehaviour
     [SerializeField] private float dizzyDuration;
     private float dizzyTimer = Mathf.Infinity;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip jumpOnHead;
+
     // Reference
     private Animator anim;
     private Health playerHealth;
@@ -41,10 +45,11 @@ public class MeleeEnemy : MonoBehaviour
         // ATTACK ONLY WHEN PLAYER GET IN TOO CLOSE
         if (PlayerInSight())
         {
-            if (cooldownTimer >= attackCooldown)
+            if (cooldownTimer >= attackCooldown && playerHealth.currentHealth > 0)
             {
                 cooldownTimer = 0;
                 anim.SetTrigger("meleeAttack");
+                SoundManager.instance.PlaySound(attackSound);
             }
         }
 
@@ -108,6 +113,8 @@ public class MeleeEnemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Player")
         {
+            SoundManager.instance.PlaySound(jumpOnHead);
+
             if(hasCollide == false){
                 Rigidbody2D playerRigidBody = collision.GetComponent<Rigidbody2D>();
                 hasCollide = true;

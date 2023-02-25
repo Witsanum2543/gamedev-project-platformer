@@ -233,8 +233,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.054181144, y: -0.16857767}
-  m_Size: {x: 0.54918945, y: 0.3167177}
+  m_Offset: {x: 0.058100663, y: -0.13552907}
+  m_Size: {x: 0.5661401, y: 0.118426874}
   m_Direction: 1
 --- !u!50 &3299684970681671117
 Rigidbody2D:
@@ -279,6 +279,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   dizzyDuration: 2
+  attackSound: {fileID: 8300000, guid: 35b17b6943244d04f8fff3a1552890ea, type: 3}
+  jumpOnHead: {fileID: 8300000, guid: c802832819e06654a9d7ce0640276c65, type: 3}
 --- !u!114 &3299684970681671116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,6 +300,8 @@ MonoBehaviour:
   - {fileID: 3299684970681671115}
   - {fileID: 3299684971686401418}
   - {fileID: 3299684971686401418}
+  diedSound: {fileID: 8300000, guid: a49fdc05a30f6314fb6a43aad99c9208, type: 3}
+  hurtSound: {fileID: 0}
 --- !u!1 &3299684972223321600
 GameObject:
   m_ObjectHideFlags: 0

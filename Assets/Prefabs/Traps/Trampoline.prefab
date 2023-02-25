@@ -146,3 +146,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 15
+  jumpSound: {fileID: 8300000, guid: 28c779b58ad7d0341b712baa06d7e026, type: 3}

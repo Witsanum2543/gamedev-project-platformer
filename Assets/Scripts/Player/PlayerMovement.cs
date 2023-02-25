@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpHeight = 6.5f;
     [SerializeField] float sizeScale = 1.3f;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip jumpSound;
+
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
     Animator myAnimator;
@@ -58,7 +61,9 @@ public class PlayerMovement : MonoBehaviour
         }
         if(value.isPressed)
         {
-                myRigidbody.velocity += new Vector2(0f, jumpHeight);
+            SoundManager.instance.PlaySound(jumpSound);
+            myRigidbody.velocity += new Vector2(0f, jumpHeight);
+            
         }
     }
 
