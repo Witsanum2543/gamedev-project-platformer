@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectile : EnemyDamage // Will damage player every time they touch
+public class EnemyProjectile : MonoBehaviour // Will damage player every time they touch
 {
     private float speed;
     private float resetTime;
     private float lifetime;
     private float direction;
+    private float damage;
 
     private Vector3 arrowInitScale;
 
@@ -17,7 +18,7 @@ public class EnemyProjectile : EnemyDamage // Will damage player every time they
         direction = _direction;
         speed = _speed;
         resetTime = _resetTime;
-        SetDamage(_damage);
+        damage = _damage;
 
         arrowInitScale = GetComponent<Transform>().localScale;
         GetComponent<Transform>().localScale = new Vector3(Mathf.Abs(arrowInitScale.x) * _direction,
@@ -35,8 +36,12 @@ public class EnemyProjectile : EnemyDamage // Will damage player every time they
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        base.OnTriggerEnter2D(collision);
-        gameObject.SetActive(false);
+        if (collision.tag == "Player") {
+            collision.GetComponent<Health>().TakeDamage(damage);
+            gameObject.SetActive(false);
+        } else {
+            gameObject.SetActive(false);
+        }
     }
 
 }
