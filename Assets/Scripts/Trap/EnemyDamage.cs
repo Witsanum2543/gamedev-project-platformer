@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-    [SerializeField] private float damage;
+    [SerializeField] protected float damage;
     private bool hasCollide = false;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player") {
             if(hasCollide == false){
@@ -22,5 +22,9 @@ public class EnemyDamage : MonoBehaviour
     {
         yield return new WaitForSeconds(second);
         hasCollide = false;
+    }
+
+    protected void SetDamage(float _damage) {
+        damage = _damage;
     }
 }

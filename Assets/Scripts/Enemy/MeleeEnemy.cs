@@ -123,7 +123,7 @@ public class MeleeEnemy : MonoBehaviour
                     dizzyTimer = 0;
                     anim.SetBool("isDizzy", false);
                     GetComponent<Health>().dead();
-                    playerRigidBody.velocity = new Vector2(0f, 10f);
+                    playerRigidBody.velocity = new Vector2(0f, 7f);
                 }
                 StartCoroutine(ResetCollide(0.2f));
             }

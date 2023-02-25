@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class Enemy_Sideways : MonoBehaviour
+public class Enemy_Sideways : EnemyDamage
 {
     [SerializeField] private float movementDistance;
     [SerializeField] private float speedXAxis;
     [SerializeField] private float speedYAxis;
-    [SerializeField] private float damage;
     [SerializeField] private bool upDown;
 
     // moving left right
@@ -59,11 +58,4 @@ public class Enemy_Sideways : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) 
-    {
-        if(collision.tag == "Player")
-        {
-            collision.GetComponent<Health>().TakeDamage(damage);
-        }
-    }
 }
