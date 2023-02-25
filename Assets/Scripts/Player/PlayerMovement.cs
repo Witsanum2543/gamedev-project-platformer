@@ -9,6 +9,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpHeight = 6.5f;
     [SerializeField] float sizeScale = 1.3f;
 
+    [Header("Coyote Time")]
+    [SerializeField] private float coyoteTime;
+    private float coyoteCounter;
+
+    [Header("Extra jumps")]
+    [SerializeField] private int extraJumps;
+    private int jumpCounter;
+
     [Header("Sound")]
     [SerializeField] private AudioClip jumpSound;
 
@@ -38,6 +46,13 @@ public class PlayerMovement : MonoBehaviour
         Run();
         FlipSprite();     
 
+        if(isGrounded()) {
+            coyoteCounter = coyoteTime; // Reset coyote counter when touching ground
+            jumpCounter = extraJumps;
+        } else {
+            coyoteCounter -= Time.deltaTime; // Start decreasing coyote counter when not on the ground
+        }
+
     }
 
     void playerSizeScale()
@@ -55,14 +70,22 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
-        if(!isGrounded())
+        if(!isGrounded() && coyoteCounter < 0 && jumpCounter <= 0)
         {
             return;
         }
         if(value.isPressed)
         {
-            SoundManager.instance.PlaySound(jumpSound);
-            myRigidbody.velocity += new Vector2(0f, jumpHeight);
+            if (coyoteCounter > 0) {
+                SoundManager.instance.PlaySound(jumpSound);
+                myRigidbody.velocity = new Vector2(0f, jumpHeight);
+            } else {
+                if (jumpCounter > 0) {
+                    SoundManager.instance.PlaySound(jumpSound);
+                    myRigidbody.velocity = new Vector2(0f, jumpHeight);
+                    jumpCounter--;
+                }
+            }
             
         }
     }

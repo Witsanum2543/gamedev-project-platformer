@@ -18,13 +18,13 @@ public class SoundManager : MonoBehaviour
         source.PlayOneShot(_sound, volume);
     }
 
-    public float calculateVolume(Vector3 objectPosition, float minDist, float maxDist) {
+    public float calculateVolume(Vector3 objectPosition, float minDist, float maxDist, float maxSoundPercentage=1f) {
 
         float dist = Vector3.Distance(objectPosition, listenerTransform.position);
 
         if(dist < minDist)
         {
-           return 1;
+           return maxSoundPercentage;
         }
         else if(dist > maxDist)
         {
@@ -32,7 +32,7 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            return 1 - ((dist - minDist) / (maxDist - minDist));
+            return maxSoundPercentage - ((dist - minDist) / (maxDist - minDist));
         }
     }
 }

@@ -9,13 +9,26 @@ public class FollowThePath : MonoBehaviour {
     [Header("Sound")]
     [SerializeField] private AudioClip impactSound;
 
+    [Header("Activate")]
+    public Transform playerPosition;
+
     // Index of current waypoint from which Enemy walks to the next one
     private int waypointIndex = 0;
     private bool reverseMove = false;
+    private bool activateTrap = false;
 
 	
 	private void Update () {
-        Move();
+        
+        if (!activateTrap) {
+            float dist = Vector3.Distance(transform.position, playerPosition.position);
+            activateTrap = dist < 6;
+        }
+        
+
+        if(activateTrap) {
+            Move();
+        }      
 	}
 
     private void Move()
@@ -36,8 +49,6 @@ public class FollowThePath : MonoBehaviour {
 
         if (transform.position == waypoints[waypointIndex].transform.position)
         {
-
-            SoundManager.instance.PlaySound(impactSound, SoundManager.instance.calculateVolume(transform.position, 1, 10));
             // Update the waypoint index based on the direction of movement
             if (reverseMove) {
                 waypointIndex--;
@@ -49,7 +60,6 @@ public class FollowThePath : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag == "Player") {
-            SoundManager.instance.PlaySound(impactSound);
             Health playerHealth = collision.GetComponent<Health>();
             playerHealth.TakeDamage(playerHealth.currentHealth);
         }
