@@ -91,6 +91,7 @@ public class UIManager : MonoBehaviour
 
     # region Win
     public void Win() {
+        Time.timeScale = 0;
         winScreen.SetActive(true);
     }
 
