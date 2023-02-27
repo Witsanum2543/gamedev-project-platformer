@@ -9,6 +9,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpHeight = 6.5f;
     [SerializeField] float sizeScale = 1.3f;
 
+    [Header("Jump Down")]
+    [SerializeField] private float jumpDownSpeed;
+    [SerializeField] private float fallMultiplier;
+    Vector2 vecGravity; 
+
     [Header("Coyote Time")]
     [SerializeField] private float coyoteTime;
     private float coyoteCounter;
@@ -36,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
         myBodyCollider = GetComponent<CapsuleCollider2D>();
         myFeetCollider = GetComponent<BoxCollider2D>();
         playerSizeScale(); 
+
+        vecGravity = new Vector2(0, -Physics2D.gravity.y);
     }
 
 
@@ -54,6 +61,26 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+    private void FixedUpdate() {
+
+        // jumpDown acceralation
+        if (!isGrounded() && Input.GetAxisRaw("Vertical") < 0) {
+            myRigidbody.AddForce(new Vector2(0f, -jumpDownSpeed), ForceMode2D.Impulse);
+        }
+
+        if (myRigidbody.velocity.y < 0) {
+            myRigidbody.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
+        }
+
+        // Allow horizontal movement while jumping down
+        if (!isGrounded() && myRigidbody.velocity.y < 0)
+        {
+            Vector2 playerVelocity = new Vector2(moveInput.x * runSpeed, myRigidbody.velocity.y);
+            myRigidbody.velocity = playerVelocity;
+        }
+    }
+
 
     void playerSizeScale()
     {
@@ -78,11 +105,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (coyoteCounter > 0) {
                 SoundManager.instance.PlaySound(jumpSound);
-                myRigidbody.velocity = new Vector2(0f, jumpHeight);
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpHeight);
             } else {
                 if (jumpCounter > 0) {
                     SoundManager.instance.PlaySound(jumpSound);
-                    myRigidbody.velocity = new Vector2(0f, jumpHeight);
+                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpHeight);
                     jumpCounter--;
                 }
             }

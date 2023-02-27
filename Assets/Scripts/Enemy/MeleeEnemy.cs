@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MeleeEnemy : MonoBehaviour
 {
+    [SerializeField] private bool canDead;
+
     [Header ("Attack Parameters")]
     [SerializeField] private float attackCooldown;
     [SerializeField] private float range;
@@ -120,13 +122,14 @@ public class MeleeEnemy : MonoBehaviour
                 hasCollide = true;
                 
                 // Stun enemy if enemy is not being dizzy
-                if (anim.GetBool("isDizzy") == false) {
+                if (anim.GetBool("isDizzy") == false || !canDead) {
                     anim.SetBool("isDizzy", true);
                     playerRigidBody.velocity = new Vector2(0f, 7f);
                 }
 
                 // If enemy already dizzy kill it
-                else if (anim.GetBool("isDizzy") == true) {
+                else if (anim.GetBool("isDizzy") == true && canDead) {
+                    
                     dizzyTimer = 0;
                     anim.SetBool("isDizzy", false);
                     GetComponent<Health>().dead();

@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc958fe600b6aa478e7becbb7c237b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canDead: 1
   attackCooldown: 2.5
   range: 1.61
   damage: 1

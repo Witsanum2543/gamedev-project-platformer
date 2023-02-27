@@ -220,6 +220,8 @@ MonoBehaviour:
   runSpeed: 6
   jumpHeight: 7
   sizeScale: 1.3
+  jumpDownSpeed: 0.4
+  fallMultiplier: 0.4
   coyoteTime: 0.25
   extraJumps: 1
   jumpSound: {fileID: 8300000, guid: eeba3ad85ec61344a81ca91dff19531d, type: 3}
